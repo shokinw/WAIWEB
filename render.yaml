@@ -32,9 +32,15 @@ services:
     staticPublishPath: dist
     envVars:
       - key: VITE_BACKEND_URL
-        fromService:
-          name: waiwebb-backend
-          type: web
-          property: url
+        value: https://waiwebbajkbjds.onrender.com
       - key: VITE_RAZORPAY_KEY_ID
         sync: false
+
+  - type: static
+    name: waiwebb-admin
+    rootDir: WAIWEBB-main/admin
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_BACKEND_URL
+        value: https://waiwebbajkbjds.onrender.com
