@@ -1,0 +1,40 @@
+services:
+  - type: web
+    name: waiwebb-backend
+    env: node
+    rootDir: WAIWEBB-main/backend
+    plan: free
+    buildCommand: npm install
+    startCommand: node server.js
+    envVars:
+      - key: PORT
+        value: 10000
+      # Set these in Render dashboard or here with values
+      - key: MONGODB_URI
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: CLOUDINARY_CLOUD_NAME
+        sync: false
+      - key: CLOUDINARY_API_KEY
+        sync: false
+      - key: CLOUDINARY_API_SECRET
+        sync: false
+      - key: RAZORPAY_KEY_ID
+        sync: false
+      - key: RAZORPAY_KEY_SECRET
+        sync: false
+
+  - type: static
+    name: waiwebb-frontend
+    rootDir: WAIWEBB-main/frontend
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_BACKEND_URL
+        fromService:
+          name: waiwebb-backend
+          type: web
+          property: url
+      - key: VITE_RAZORPAY_KEY_ID
+        sync: false
